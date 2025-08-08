@@ -1,0 +1,27 @@
+```typescript
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+
+// This import path will cause the test to fail initially
+// because the ProjectInfo component does not yet exist.
+import ProjectInfo from './ProjectInfo';
+
+describe('ProjectInfo Component', () => {
+  it('should display the core project configuration details', () => {
+    // Render the ProjectInfo component
+    // This line will throw an error as ProjectInfo is not defined/exported yet.
+    render(<ProjectInfo />);
+
+    // Assert that the component renders a main title for project configuration
+    expect(screen.getByRole('heading', { name: /Project Configuration Summary/i })).toBeInTheDocument();
+
+    // Assert that it displays a placeholder or actual project name
+    expect(screen.getByText(/Project Name: My Awesome App/i)).toBeInTheDocument();
+
+    // Assert that it displays a placeholder or actual project version
+    expect(screen.getByText(/Version: 1.0.0/i)).toBeInTheDocument();
+
+    // Assert that a status indicating initial setup is complete or ready is present
+    expect(screen.getByText(/Status: Core setup complete/i)).toBeInTheDocument();
+  });
+});
